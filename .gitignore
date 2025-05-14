@@ -24,7 +24,7 @@ instance/*
 *.sqlite3 
 
 # Firebase credentials
-.firebase-auth.json
+firebase-auth.json
 
 # Uploads folder
 # app/static/uploads/*
