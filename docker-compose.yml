@@ -2,7 +2,7 @@ services:
   web:
     build: .
     ports:
-      - "5001:5000"
+      - "5001:8080"
     volumes:
       - .:/app
       - uploads_data:/app/app/static/uploads
@@ -12,11 +12,12 @@ services:
       - FLASK_ENV=development
       - DATABASE_URL=postgresql://postgres:taiuong@35.238.163.196:5432/ds_reading_db
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - PORT=8080
     depends_on:
       db:
         condition: service_healthy
     command: >
-      sh -c "sleep 10 && flask run --host=0.0.0.0"
+      sh -c "sleep 10 && python run"
   db:
     image: postgres:13
     volumes:
