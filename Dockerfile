@@ -30,5 +30,5 @@ EXPOSE 8080
 
 
 # cloud
-CMD ["flask", "run"]
+CMD ["python", "run.py"]
 
