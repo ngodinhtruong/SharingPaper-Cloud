@@ -8,7 +8,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy toàn bộ code vào container
 COPY . .
-COPY firebase-auth.json /app/firebase-auth.json
+COPY firebase-auth.json /app/firebase-auth/firebase-auth.json
 
 # Tạo thư mục uploads
 #docker
