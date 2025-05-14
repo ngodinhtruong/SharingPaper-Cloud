@@ -5,6 +5,7 @@ WORKDIR /app
 # Cài đặt các dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install gunicorn eventlet
 
 # Copy toàn bộ code vào container
 COPY . .
@@ -24,11 +25,13 @@ ENV FLASK_APP=run.py
 
 EXPOSE 8080
 
-# Chạy ứng dụng
-# docker
-# CMD ["flask", "run", "--host=0.0.0.0"]  
+# Setup gunicorn config
+RUN echo "worker_class = 'eventlet'" > gunicorn.conf.py
+RUN echo "workers = 1" >> gunicorn.conf.py
+RUN echo "bind = '0.0.0.0:8080'" >> gunicorn.conf.py
+RUN echo "timeout = 120" >> gunicorn.conf.py
+RUN echo "loglevel = 'info'" >> gunicorn.conf.py
 
-
-# cloud
-CMD ["python", "run.py"]
+# Chạy ứng dụng với gunicorn
+CMD exec gunicorn --config gunicorn.conf.py --preload 'app:create_app()'
 
